@@ -14,6 +14,7 @@ const Login = () => {
 const responseGoogle = async (response) => {
 
   const decoded = jwt_decode(response.credential);
+
   localStorage.setItem('user', JSON.stringify(decoded));
 
   const doc = {
