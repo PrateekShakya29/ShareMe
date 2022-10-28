@@ -26,7 +26,7 @@ const Pin = ({ pin }) => {
             });
     };
 
-    let alreadySaved = pin?.save?.filter((item) => item?.postedBy?._id === user?.googleId);
+    let alreadySaved = pin?.save?.filter((item) => item?.postedBy?._id === user?.sub);
 
     alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
@@ -39,10 +39,10 @@ const Pin = ({ pin }) => {
                 .setIfMissing({ save: [] })
                 .insert('after', 'save[-1]', [{
                     _key: uuidv4(),
-                    userId: user?.googleId,
+                    userId: user?.sub,
                     postedBy: {
                         _type: 'postedBy',
-                        _ref: user?.googleId,
+                        _ref: user?.sub,
                     },
                 }])
                 .commit()
@@ -111,7 +111,7 @@ const Pin = ({ pin }) => {
                                 </a>
                             ) : undefined}
                             {
-                                postedBy?._id === user?.googleId && (
+                                postedBy?._id === user?.sub && (
                                     <button
                                         type="button"
                                         onClick={(e) => {
